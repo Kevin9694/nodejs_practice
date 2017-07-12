@@ -43,4 +43,13 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// process sass to css
+app.use(
+    sass.middleware({
+        src: '/public/stylesheets',
+        dest: '/public/stylesheets',
+        debug: true
+    })
+);
+
 module.exports = app;
