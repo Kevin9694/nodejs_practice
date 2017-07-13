@@ -10,6 +10,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+    app.listen(8082);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +22,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+// process sass to css
+// FIX: not work
+app.use(
+    sass({
+        src: '/public/stylesheets',
+        dest: '/public/stylesheets',
+        debug: true
+    })
+);
+// static
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
@@ -44,14 +56,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// process sass to css
-// FIX: not work
-app.use(
-    sass({
-        src: '/public/stylesheets',
-        dest: '/public/stylesheets',
-        debug: true
-    })
-);
 
 module.exports = app;
