@@ -27,8 +27,8 @@ app.use(cookieParser());
 // FIX: not work
 app.use(
     sass({
-        src: '/public/stylesheets',
-        dest: '/public/stylesheets',
+        src: path.join(__dirname,'public','stylesheets'),
+        dest: path.join(__dirname,'public','stylesheets'),
         debug: true
     })
 );
