@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var sass = require('node-sass-middleware');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -44,8 +45,9 @@ app.use(function(err, req, res, next) {
 });
 
 // process sass to css
+// FIX: not work
 app.use(
-    sass.middleware({
+    sass({
         src: '/public/stylesheets',
         dest: '/public/stylesheets',
         debug: true
