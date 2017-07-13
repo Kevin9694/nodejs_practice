@@ -12,6 +12,18 @@ var users = require('./routes/users');
 var app = express();
     app.listen(8082);
 
+// process scss to css
+// WARN: Only SCSS can be rendered, SASS can not.
+app.use(
+    sass({
+        src: path.join(__dirname,'public','stylesheets'),
+        dest: path.join(__dirname,'public','stylesheets'),
+        debug: true,
+        outputStyle: 'compressed',
+        //log: function (severity, key, value) { winston.log(severity, 'node-sass-middleware   %s : %s', key, value); }
+    })
+);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -23,15 +35,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// process sass to css
-// FIX: not work
-app.use(
-    sass({
-        src: path.join(__dirname,'public','stylesheets'),
-        dest: path.join(__dirname,'public','stylesheets'),
-        debug: true
-    })
-);
+
 // static
 app.use(express.static(path.join(__dirname, 'public')));
 
