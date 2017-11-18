@@ -18,9 +18,8 @@ app.use(
     sass({
         src: path.join(__dirname,'public','stylesheets'),
         dest: path.join(__dirname,'public','stylesheets'),
-        debug: true,
         outputStyle: 'compressed',
-        //log: function (severity, key, value) { winston.log(severity, 'node-sass-middleware   %s : %s', key, value); }
+        debug:true,
     })
 );
 
