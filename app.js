@@ -4,11 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var sass = require('node-sass-middleware');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+    app.listen(8082);
+
+// process scss to css
+// WARN: Only SCSS can be rendered, SASS can not.
+app.use(
+    sass({
+        src: path.join(__dirname,'public','stylesheets'),
+        dest: path.join(__dirname,'public','stylesheets'),
+        outputStyle: 'compressed',
+        debug:true,
+    })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -20,6 +33,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+
+// static
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
@@ -42,5 +58,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
